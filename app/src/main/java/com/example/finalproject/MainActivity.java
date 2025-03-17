@@ -1,6 +1,7 @@
 package com.example.finalproject;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,8 +9,11 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class MainActivity extends AppCompatActivity {
+import com.example.finalproject.dataaccess.FoodListDataAccess;
+import com.example.finalproject.models.MySQLiteHelper;
 
+public class MainActivity extends AppCompatActivity {
+    public static final String TAG = "MainActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,5 +24,10 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        Log.d(TAG, FoodListDataAccess.TABLE_CREATE);
+
+        FoodListDataAccess da = new FoodListDataAccess(this);
+
     }
 }
