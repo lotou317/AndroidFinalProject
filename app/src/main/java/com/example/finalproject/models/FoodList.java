@@ -21,6 +21,19 @@ public class FoodList {
         this.lastUpdated = new Date();
     }
 
+    public FoodList(long id, String listName, Date firstCreated, Date lastUpdated) {
+        this.id = id;
+        this.listName = listName;
+        this.firstCreated = firstCreated;
+        this.lastUpdated = lastUpdated;
+    }
+
+    public FoodList(String listName, Date firstCreated, Date lastUpdated) {
+        this.listName = listName;
+        this.firstCreated = firstCreated;
+        this.lastUpdated = lastUpdated;
+    }
+
     public long getId() {
         return id;
     }
@@ -42,6 +55,9 @@ public class FoodList {
 
     public void setFoodList(List<Food> foodList) {
         this.foodList = foodList;
+    }
+    public Date getFirstCreated() {
+        return firstCreated;
     }
 
     public Date getLastUpdated() {

@@ -29,6 +29,11 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     }
 
     @Override
+    public void onConfigure(SQLiteDatabase db) {
+        super.onConfigure(db);
+        db.setForeignKeyConstraintsEnabled(true); // Enable foreign keys
+    }
+    @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
         Log.d(TAG, String.format("New version of the database, updating from version %d to version %d", oldVersion, newVersion));

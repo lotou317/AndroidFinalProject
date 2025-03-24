@@ -25,6 +25,18 @@ public class Food {
         this.description = description;
     }
 
+    public Food(int sweet, int salty, int sour, int bitter, int umami, String countryOfOrigin, boolean spicy, String name, String description) {
+        this.sweet = sweet;
+        this.salty = salty;
+        this.sour = sour;
+        this.bitter = bitter;
+        this.umami = umami;
+        this.countryOfOrigin = countryOfOrigin;
+        this.spicy = spicy;
+        this.name = name;
+        this.description = description;
+    }
+
     public long getId() {
         return id;
     }

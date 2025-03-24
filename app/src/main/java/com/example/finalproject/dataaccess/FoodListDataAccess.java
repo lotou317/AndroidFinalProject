@@ -1,55 +1,27 @@
 package com.example.finalproject.dataaccess;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.finalproject.models.FoodList;
 import com.example.finalproject.models.MySQLiteHelper;
 
-public class FoodListDataAccess {
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 
-//-- Create the Food table
-//    CREATE TABLE Food (
-//            id INTEGER PRIMARY KEY AUTOINCREMENT,
-//            sweet INTEGER NOT NULL,
-//            salty INTEGER NOT NULL,
-//            sour INTEGER NOT NULL,
-//            bitter INTEGER NOT NULL,
-//            umami INTEGER NOT NULL,
-//            countryOfOrigin TEXT,
-//            spicy BOOLEAN NOT NULL DEFAULT 0,
-//            name TEXT NOT NULL,
-//            description TEXT
-//    );
-//
-//-- Create the FoodList table
-//    CREATE TABLE FoodList (
-//            id INTEGER PRIMARY KEY AUTOINCREMENT,
-//            listName TEXT NOT NULL DEFAULT '',
-//            firstCreated TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
-//            lastUpdated TEXT DEFAULT NULL
-//    );
-//
-//-- Create a junction table to represent the many-to-many relationship between Food and FoodList
-//    CREATE TABLE FoodList_Food (
-//            foodListId INTEGER NOT NULL,
-//            foodId INTEGER NOT NULL,
-//            PRIMARY KEY (foodListId, foodId),
-//    FOREIGN KEY (foodListId) REFERENCES FoodList(id) ON DELETE CASCADE,
-//    FOREIGN KEY (foodId) REFERENCES Food(id) ON DELETE CASCADE
-//);
-//
-//-- Create indexes for better query performance
-//    CREATE INDEX idx_Food_countryOfOrigin ON Food(countryOfOrigin);
-//    CREATE INDEX idx_FoodList_listName ON FoodList(listName);
-//    CREATE INDEX idx_FoodList_Food_foodListId ON FoodList_Food(foodListId);
-//    CREATE INDEX idx_FoodList_Food_foodId ON FoodList_Food(foodId);
+public class FoodListDataAccess {
 
     public static final String TABLE_NAME = "FoodList";
     public static final String COLUMN_FOOD_LIST_ID = "id";
     public static final String COLUMN_LIST_NAME = "listName";
     public static final String COLUMN_FIRST_CREATED = "firstCreated";
     public static final String COLUMN_LAST_UPDATED = "lastUpdated";
+    SimpleDateFormat dateFormat = new SimpleDateFormat("M/d/yyyy");
+
     public static final String TABLE_CREATE = String.format("CREATE TABLE %s ( %s INTEGER PRIMARY KEY AUTOINCREMENT, %s TEXT NOT NULL DEFAULT '', %s TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP, %s TEXT DEFAULT NULL)",
             TABLE_NAME,
             COLUMN_FOOD_LIST_ID,
@@ -66,50 +38,83 @@ public class FoodListDataAccess {
         this.dbHelper = new MySQLiteHelper(context);
         this.database = this.dbHelper.getWritableDatabase();
     }
-    public FoodList getTFoodListById(long id){
-        for(FoodList t: allFoodLists){
-            if(t.getId() == id){
-                return t;
+//    @Override
+public ArrayList<FoodList> getAllFoodLists() {
+    ArrayList<FoodList> foodLists = new ArrayList<>();
+    String query = String.format("SELECT %s, %s, %s, %s FROM %s", COLUMN_FOOD_LIST_ID, COLUMN_LIST_NAME, COLUMN_FIRST_CREATED, COLUMN_LAST_UPDATED, TABLE_NAME);
+    Cursor c = database.rawQuery(query, null);
+    if (c != null && c.getCount() > 0) {
+        c.moveToFirst(); // have to do this so you can properly loop through the cursor object
+        while (!c.isAfterLast()) {
+            long id = c.getLong(0);
+            String listName = c.getString(1);
+            String firstCreated = c.getString(2);
+            String lastUpdated = c.getString(3);
+            Date firstCreatedDate = null;
+            Date lastUpdatedDate = null;
+            try {
+                firstCreatedDate = dateFormat.parse(firstCreated);
+                lastUpdatedDate = dateFormat.parse(lastUpdated);
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
             }
+            FoodList t = new FoodList(id, listName, firstCreatedDate, lastUpdatedDate);
+            foodLists.add(t);
+            c.moveToNext(); //kind of like how you add 1 to i in a for loop
         }
-        return null;
+        c.close();
+    }
+    return foodLists;
+}
+
+    //    @Override
+    public FoodList getFoodListById(long id) {
+        String query = String.format("SELECT %s, %s, %s, %s FROM %s WHERE %s = %d", COLUMN_FOOD_LIST_ID, COLUMN_LIST_NAME, COLUMN_FIRST_CREATED, COLUMN_LAST_UPDATED, TABLE_NAME, COLUMN_FOOD_LIST_ID, id);
+        Cursor c = database.rawQuery(query, null);
+        c.moveToFirst();
+        String listName = c.getString(1);
+        String firstCreated = c.getString(2);
+        String lastUpdated = c.getString(3);
+        Date firstCreatedDate = null;
+        Date lastUpdatedDate = null;
+        try {
+            firstCreatedDate = dateFormat.parse(firstCreated);
+            lastUpdatedDate = dateFormat.parse(lastUpdated);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        c.close();
+        return new FoodList(id, listName, firstCreatedDate, lastUpdatedDate);
+
     }
 
-    private long getMaxId(){
-        long maxId = allFoodLists.get(0).getId();
-        for(FoodList t: allFoodLists){
-            maxId = t.getId() > maxId ? t.getId() : maxId; // could be replaced with "maxId = Math.max(t.getId(), maxId);"
-        }
-        return maxId;
+    //    @Override
+    public FoodList insertFoodList(FoodList t) {
+        ContentValues values = new ContentValues(); //like a hashmap
+        values.put(COLUMN_LIST_NAME, t.getListName()); //put is the way to add a key value pair into a hashmap
+        values.put(COLUMN_FIRST_CREATED, dateFormat.format(t.getFirstCreated()));
+        values.put(COLUMN_LAST_UPDATED, dateFormat.format(t.getLastUpdated()));
+
+        long insertId = database.insert(TABLE_NAME, null, values); //returns the inserted values' table id
+        //note: if the insert fails, it will return -1
+        t.setId(insertId);
+        return t;
     }
 
-    public FoodList insertTFoodList(TFoodList t)throws Exception{
-        if(t.isValid()){
-            allTFoodLists.add(t);
-            t.setId(getMaxId()+1);
-            return t;
-        }
-        throw new Exception("Invalid FoodList on insert");
+    //    @Override
+    public FoodList updateFoodList(FoodList t) {
+
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_LIST_NAME, t.getListName());
+        values.put(COLUMN_LAST_UPDATED, dateFormat.format(t.getLastUpdated()));
+        int rowsUpdated = database.update(TABLE_NAME, values, COLUMN_FOOD_LIST_ID + "=" + t.getId(), null);
+
+        return t;
     }
 
-    public FoodList updateTFoodList(FoodList updatedFoodList)throws Exception{
-        if(updatedFoodList.isValid()){
-            FoodList foodListToUpdate = getFoodListById(updatedFoodList.getId());
-            foodListToUpdate.setDescription(updatedFoodList.getDescription());
-            foodListToUpdate.setDue(updatedFoodList.getDue());
-            foodListToUpdate.setDone(updatedFoodList.isDone());
-            return updatedFoodList;
-        }
-        throw new Exception("Invalid Task on update");
-    }
-
-    public int deleteFoodList(FoodList FoodListToDelete){
-        for(FoodList t: allFoodLists){
-            if(t.getId() == FoodListToDelete.getId()){
-                allFoodLists.remove(t);
-                return 1;
-            }
-        }
-        return 0;
+    //    @Override
+    public int deleteFoodList(FoodList t) {
+        int rowsDeleted = database.delete(TABLE_NAME, COLUMN_FOOD_LIST_ID + "=" + t.getId(), null);
+        return rowsDeleted;
     }
 }
