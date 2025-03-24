@@ -3,6 +3,7 @@ package com.example.finalproject.dataaccess;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.example.finalproject.models.FoodList;
 import com.example.finalproject.models.MySQLiteHelper;
 
 public class FoodListDataAccess {
@@ -65,5 +66,50 @@ public class FoodListDataAccess {
         this.dbHelper = new MySQLiteHelper(context);
         this.database = this.dbHelper.getWritableDatabase();
     }
+    public FoodList getTFoodListById(long id){
+        for(FoodList t: allFoodLists){
+            if(t.getId() == id){
+                return t;
+            }
+        }
+        return null;
+    }
 
+    private long getMaxId(){
+        long maxId = allFoodLists.get(0).getId();
+        for(FoodList t: allFoodLists){
+            maxId = t.getId() > maxId ? t.getId() : maxId; // could be replaced with "maxId = Math.max(t.getId(), maxId);"
+        }
+        return maxId;
+    }
+
+    public FoodList insertTFoodList(TFoodList t)throws Exception{
+        if(t.isValid()){
+            allTFoodLists.add(t);
+            t.setId(getMaxId()+1);
+            return t;
+        }
+        throw new Exception("Invalid FoodList on insert");
+    }
+
+    public FoodList updateTFoodList(FoodList updatedFoodList)throws Exception{
+        if(updatedFoodList.isValid()){
+            FoodList foodListToUpdate = getFoodListById(updatedFoodList.getId());
+            foodListToUpdate.setDescription(updatedFoodList.getDescription());
+            foodListToUpdate.setDue(updatedFoodList.getDue());
+            foodListToUpdate.setDone(updatedFoodList.isDone());
+            return updatedFoodList;
+        }
+        throw new Exception("Invalid Task on update");
+    }
+
+    public int deleteFoodList(FoodList FoodListToDelete){
+        for(FoodList t: allFoodLists){
+            if(t.getId() == FoodListToDelete.getId()){
+                allFoodLists.remove(t);
+                return 1;
+            }
+        }
+        return 0;
+    }
 }
