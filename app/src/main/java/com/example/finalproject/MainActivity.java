@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, da.getFoodListById(1).toString());
 
         Log.d(TAG, "========== Update Food List ==========\n");
-        FoodList fl1 = da.getFoodListById(3);
+        FoodList fl1 = da.getFoodListById(2);
         fl1.setListName("SOME NEW Food List Name. YES!!!");
         da.updateFoodList(fl1);
         Log.d(TAG, da.getFoodListById(1).toString());
