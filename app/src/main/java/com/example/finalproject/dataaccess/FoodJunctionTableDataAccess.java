@@ -19,7 +19,7 @@ public class FoodJunctionTableDataAccess {
     public static final String TABLE_FOOD = "Food";
     public static final String COLUMN_FOOD_ID = "foodId";
 
-    public static final String TABLE_CREATE = String.format("CREATE TABLE %s ( %s INTEGER NOT NULL, %s INTEGER NOT NULL, PRIMARY KEY (%s,%s), FOREIGN KEY (%s) REFERENCES %s(id) ON DELETE CASCADE, FOREIGN KEY (%s) REFERENCES %s(id) ON DELETE CASCADE",
+    public static final String TABLE_CREATE = String.format("CREATE TABLE %s ( %s INTEGER NOT NULL, %s INTEGER NOT NULL, PRIMARY KEY (%s,%s), FOREIGN KEY (%s) REFERENCES %s(id) ON DELETE CASCADE, FOREIGN KEY (%s) REFERENCES %s(id) ON DELETE CASCADE)",
             TABLE_NAME,
             COLUMN_FOOD_LIST_ID,
             COLUMN_FOOD_ID,
@@ -41,31 +41,31 @@ public class FoodJunctionTableDataAccess {
         this.database = this.dbHelper.getWritableDatabase();
     }
 
-    public ArrayList<FoodList> getAllFoodLists( int id) {// either int id or a food model and get the id from that model
-        ArrayList<FoodList> foodLists = new ArrayList<>();
-        String query = String.format("SELECT %s, %s, %s, %s FROM %s", COLUMN_FOOD_LIST_ID, COLUMN_LIST_NAME, COLUMN_FIRST_CREATED, COLUMN_LAST_UPDATED, TABLE_NAME);
-        Cursor c = database.rawQuery(query, null);
-        if (c != null && c.getCount() > 0) {
-            c.moveToFirst(); // have to do this so you can properly loop through the cursor object
-            while (!c.isAfterLast()) {
-                long id = c.getLong(0);
-                String listName = c.getString(1);
-                String firstCreated = c.getString(2);
-                String lastUpdated = c.getString(3);
-                Date firstCreatedDate = null;
-                Date lastUpdatedDate = null;
-                try {
-                    firstCreatedDate = dateFormat.parse(firstCreated);
-                    lastUpdatedDate = dateFormat.parse(lastUpdated);
-                } catch (ParseException e) {
-                    throw new RuntimeException(e);
-                }
-                FoodList t = new FoodList(id, listName, firstCreatedDate, lastUpdatedDate);
-                foodLists.add(t);
-                c.moveToNext(); //kind of like how you add 1 to i in a for loop
-            }
-            c.close();
-        }
-        return foodLists;
-    }
+//    public ArrayList<FoodList> getAllFoodLists( int id) {// either int id or a food model and get the id from that model
+//        ArrayList<FoodList> foodLists = new ArrayList<>();
+//        String query = String.format("SELECT %s, %s, %s, %s FROM %s", COLUMN_FOOD_LIST_ID, COLUMN_LIST_NAME, COLUMN_FIRST_CREATED, COLUMN_LAST_UPDATED, TABLE_NAME);
+//        Cursor c = database.rawQuery(query, null);
+//        if (c != null && c.getCount() > 0) {
+//            c.moveToFirst(); // have to do this so you can properly loop through the cursor object
+//            while (!c.isAfterLast()) {
+//                long id = c.getLong(0);
+//                String listName = c.getString(1);
+//                String firstCreated = c.getString(2);
+//                String lastUpdated = c.getString(3);
+//                Date firstCreatedDate = null;
+//                Date lastUpdatedDate = null;
+//                try {
+//                    firstCreatedDate = dateFormat.parse(firstCreated);
+//                    lastUpdatedDate = dateFormat.parse(lastUpdated);
+//                } catch (ParseException e) {
+//                    throw new RuntimeException(e);
+//                }
+//                FoodList t = new FoodList(id, listName, firstCreatedDate, lastUpdatedDate);
+//                foodLists.add(t);
+//                c.moveToNext(); //kind of like how you add 1 to i in a for loop
+//            }
+//            c.close();
+//        }
+//        return foodLists;
+//    }
 }

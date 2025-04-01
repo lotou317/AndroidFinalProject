@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.example.finalproject.dataaccess.FoodDataAccess;
+import com.example.finalproject.dataaccess.FoodJunctionTableDataAccess;
 import com.example.finalproject.dataaccess.FoodListDataAccess;
 
 public class MySQLiteHelper extends SQLiteOpenHelper {
@@ -25,6 +26,13 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 
         db.execSQL(FoodListDataAccess.TABLE_CREATE);
         db.execSQL(FoodDataAccess.TABLE_CREATE);
+        db.execSQL(FoodJunctionTableDataAccess.TABLE_CREATE);
+
+        // Creates  indexes for better/faster querying
+        db.execSQL("CREATE INDEX IF NOT EXISTS idx_Food_countryOfOrigin ON Food(countryOfOrigin);");
+        db.execSQL("CREATE INDEX IF NOT EXISTS idx_FoodList_listName ON FoodList(listName);");
+        db.execSQL("CREATE INDEX IF NOT EXISTS idx_FoodList_Food_foodListId ON FoodList_Food(foodListId);");
+        db.execSQL("CREATE INDEX IF NOT EXISTS idx_FoodList_Food_foodId ON FoodList_Food(foodId);");
 
     }
 
