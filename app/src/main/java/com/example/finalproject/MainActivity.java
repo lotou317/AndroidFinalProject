@@ -69,6 +69,8 @@ public class MainActivity extends AppCompatActivity {
         da.deleteFoodList(list2);
         da.deleteFoodList(list3);
 
+
+
         Log.d(TAG, " \n\n===== Food Data Access =====");
         FoodDataAccess fda = new FoodDataAccess(this);
         Food f = new Food(3,6,1,2,7,"",false,"Ramen","Beef flavored cup ramen from the grocery store");

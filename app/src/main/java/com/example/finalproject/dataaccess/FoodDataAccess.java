@@ -43,11 +43,13 @@ public class FoodDataAccess {
     private Context context;
     private MySQLiteHelper dbHelper;
     private SQLiteDatabase database; // the database object which we run our queries
+    private FoodJunctionTableDataAccess FDataAccess;
 
     public FoodDataAccess(Context context){
         this.context = context;
         this.dbHelper = new MySQLiteHelper(context);
         this.database = this.dbHelper.getWritableDatabase();
+        this.FDataAccess = new FoodJunctionTableDataAccess(context);
     }
 
     public ArrayList<Food> getAllFoods() {
@@ -161,6 +163,17 @@ public class FoodDataAccess {
         int rowsDeleted = database.delete(TABLE_NAME, COLUMN_FOOD_ID + "=" + t.getId(), null);
         return rowsDeleted;
     }
+
+    //Junction Table methods
+
+    public void addFoodToList(int foodId, int foodListId){
+        FDataAccess.addFoodToList(foodId, foodListId);
+    }
+
+    public ArrayList<FoodList> getAllFoodListFromFood(int foodId) {
+        return FDataAccess.getAllFoodListFromFood(foodId);
+    }
+
 }
 
 
@@ -176,7 +189,7 @@ public class FoodDataAccess {
 //INSERT INTO FoodList_Food (foodListId, foodId) VALUES
 //(2, 1)
 
-
+//
 //-- Insert sample foods
 //INSERT INTO Food (sweet, salty, sour, bitter, umami, countryOfOrigin, spicy, name, description) VALUES
 //(5, 2, 3, 1, 4, 'Japan', 1, 'Sushi', 'A traditional Japanese dish with vinegared rice and raw fish.'),

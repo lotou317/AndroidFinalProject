@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.example.finalproject.models.Food;
 import com.example.finalproject.models.FoodList;
 import com.example.finalproject.models.MySQLiteHelper;
 
@@ -32,11 +33,13 @@ public class FoodListDataAccess {
     private Context context;
     private MySQLiteHelper dbHelper;
     private SQLiteDatabase database; // the database object which we run our queries
+    private FoodJunctionTableDataAccess FDataAccess;
 
     public FoodListDataAccess(Context context){
         this.context = context;
         this.dbHelper = new MySQLiteHelper(context);
         this.database = this.dbHelper.getWritableDatabase();
+        this.FDataAccess = new FoodJunctionTableDataAccess(context);
     }
 //    @Override
 public ArrayList<FoodList> getAllFoodLists() {
@@ -117,4 +120,13 @@ public ArrayList<FoodList> getAllFoodLists() {
         int rowsDeleted = database.delete(TABLE_NAME, COLUMN_FOOD_LIST_ID + "=" + t.getId(), null);
         return rowsDeleted;
     }
+
+    public void addFoodToList(int foodId, int foodListId){
+        FDataAccess.addFoodToList(foodId, foodListId);
+    }
+
+    public ArrayList<Food> getAllFoodFromFoodList(int foodListId){
+        return FDataAccess.getAllFoodFromFoodList(foodListId);
+    }
+
 }
