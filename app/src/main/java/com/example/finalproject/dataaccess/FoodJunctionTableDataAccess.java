@@ -41,6 +41,22 @@ public class FoodJunctionTableDataAccess {
         this.database = this.dbHelper.getWritableDatabase();
     }
 
+    public void addFoodToList(int foodId, int foodListId) {
+        String query = String.format("INSERT INTO FoodList_Food (%s, %s) VALUES (" + foodId + "," + foodListId + ");", COLUMN_FOOD_ID, COLUMN_FOOD_LIST_ID);
+    }
+
+    public ArrayList<Food> getAllFoodFromFoodList(int foodListId){
+        String query = String.format(SELECT Food.*
+                        FROM Food
+                JOIN FoodList_Food ON Food.id = FoodList_Food.foodId
+                WHERE FoodList_Food.foodListId = 2;)
+    }
+    SELECT Food.*
+    FROM Food
+    JOIN FoodList_Food ON Food.id = FoodList_Food.foodId
+    WHERE FoodList_Food.foodListId = 2;
+
+
 //    public ArrayList<FoodList> getAllFoodLists( int id) {// either int id or a food model and get the id from that model
 //        ArrayList<FoodList> foodLists = new ArrayList<>();
 //        String query = String.format("SELECT %s, %s, %s, %s FROM %s", COLUMN_FOOD_LIST_ID, COLUMN_LIST_NAME, COLUMN_FIRST_CREATED, COLUMN_LAST_UPDATED, TABLE_NAME);

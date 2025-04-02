@@ -162,3 +162,45 @@ public class FoodDataAccess {
         return rowsDeleted;
     }
 }
+
+
+//// db queries
+
+//--selects all foods inside the foodlist with the id of 2
+//SELECT Food.*
+//FROM Food
+//JOIN FoodList_Food ON Food.id = FoodList_Food.foodId
+//WHERE FoodList_Food.foodListId = 2;
+
+
+//INSERT INTO FoodList_Food (foodListId, foodId) VALUES
+//(2, 1)
+
+
+//-- Insert sample foods
+//INSERT INTO Food (sweet, salty, sour, bitter, umami, countryOfOrigin, spicy, name, description) VALUES
+//(5, 2, 3, 1, 4, 'Japan', 1, 'Sushi', 'A traditional Japanese dish with vinegared rice and raw fish.'),
+//        (2, 4, 1, 3, 5, 'Italy', 0, 'Pizza', 'A popular Italian dish with a baked crust, cheese, and toppings.'),
+//        (3, 5, 2, 1, 4, 'Mexico', 1, 'Tacos', 'A Mexican dish consisting of a folded tortilla filled with meat and toppings.'),
+//        (4, 2, 5, 1, 3, 'India', 1, 'Curry', 'A spicy Indian dish with a thick sauce and various spices.'),
+//        (1, 3, 4, 5, 2, 'China', 0, 'Dumplings', 'A Chinese dish consisting of dough filled with meat or vegetables.'),
+//        (3, 2, 1, 4, 5, 'France', 0, 'Croissant', 'A buttery, flaky French pastry.'),
+//        (4, 3, 5, 2, 1, 'Thailand', 1, 'Pad Thai', 'A Thai noodle dish with a sweet-savory sauce and peanuts.');
+//
+//        -- Insert sample food lists
+//INSERT INTO FoodList (listName, firstCreated, lastUpdated) VALUES
+//('Favorite Foods', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+//        ('Spicy Lovers', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+//        ('Savory Dishes', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+//
+//        -- Associate foods with food lists
+//INSERT INTO FoodList_Food (foodListId, foodId) VALUES
+//(1, 1), -- Sushi in Favorite Foods
+//        (1, 2), -- Pizza in Favorite Foods
+//        (1, 3), -- Tacos in Favorite Foods
+//        (2, 4), -- Curry in Spicy Lovers
+//        (2, 3), -- Tacos in Spicy Lovers
+//        (2, 7), -- Pad Thai in Spicy Lovers
+//        (3, 2), -- Pizza in Savory Dishes
+//        (3, 4), -- Curry in Savory Dishes
+//        (3, 5); -- Dumplings in Savory Dishes
