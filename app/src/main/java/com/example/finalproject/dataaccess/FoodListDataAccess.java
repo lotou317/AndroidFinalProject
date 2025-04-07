@@ -121,12 +121,18 @@ public ArrayList<FoodList> getAllFoodLists() {
         return rowsDeleted;
     }
 
+    //Junction Table methods
+
     public void addFoodToList(int foodId, int foodListId){
         FDataAccess.addFoodToList(foodId, foodListId);
     }
 
     public ArrayList<Food> getAllFoodFromFoodList(int foodListId){
         return FDataAccess.getAllFoodFromFoodList(foodListId);
+    }
+
+    public int deleteFoodFromList(int foodId, int foodListId) {
+        return FDataAccess.deleteFoodFromList(foodId, foodListId);
     }
 
 }

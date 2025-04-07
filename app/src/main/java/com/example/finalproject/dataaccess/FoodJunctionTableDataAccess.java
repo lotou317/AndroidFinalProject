@@ -50,9 +50,8 @@ public class FoodJunctionTableDataAccess {
         Cursor c = database.rawQuery(query, null);
     }
 
-    public int deleteFoodFromList(FoodList t) {
-        int rowsDeleted = database.delete(TABLE_NAME, COLUMN_FOOD_LIST_ID + "=" + t.getId(), null);
-        return rowsDeleted;
+    public int deleteFoodFromList(int foodId, int foodListId) {
+        return database.delete(TABLE_NAME, COLUMN_FOOD_ID + "=" + foodId + "AND" + COLUMN_FOOD_LIST_ID + "=" + foodListId, null);
     }
 
     public ArrayList<Food> getAllFoodFromFoodList(int foodListId){

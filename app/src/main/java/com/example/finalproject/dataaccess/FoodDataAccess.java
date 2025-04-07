@@ -174,6 +174,10 @@ public class FoodDataAccess {
         return FDataAccess.getAllFoodListFromFood(foodId);
     }
 
+    public int deleteFoodFromList(int foodId, int foodListId) {
+        return FDataAccess.deleteFoodFromList(foodId, foodListId);
+    }
+
 }
 
 
