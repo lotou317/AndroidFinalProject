@@ -104,5 +104,40 @@ public class MainActivity extends AppCompatActivity {
         fda.deleteFood(food1);
         fda.deleteFood(food2);
         fda.deleteFood(food3);
+
+        // ========== Junction Table Tests ==========
+
+        Log.d(TAG, "\n========== JUNCTION TABLE TESTING ==========");
+
+        FoodList junctionTestList = new FoodList("Asian Dishes", now, now);
+
+        da.insertFoodList(junctionTestList);
+
+        Food junctionFood1 = new Food(3, 5, 1, 2, 6, "Japan", false, "Sushi", "Rice with fish");
+        Food junctionFood2 = new Food(4, 4, 2, 1, 7, "Korea", true, "Kimchi", "Fermented spicy cabbage");
+
+        fda.insertFood(junctionFood1);
+        fda.insertFood(junctionFood2);
+
+// Add both foods to the food list
+        Log.d("Debug", "Adding Food ID " + (int)junctionFood1.getId() + " to List ID " + (int)junctionTestList.getId());
+        da.addFoodToList((int)junctionFood1.getId(), (int)junctionTestList.getId());
+
+        Log.d("Debug", "Adding Food ID " + (int)junctionFood2.getId() + " to List ID " + (int)junctionTestList.getId());
+        da.addFoodToList((int)junctionFood2.getId(), (int)junctionTestList.getId());
+
+        Log.d(TAG, "===== Foods in 'Asian Dishes' List (After Adding) =====");
+        Log.d(TAG, da.getAllFoodFromFoodList((int)junctionTestList.getId()).toString());
+
+// Delete one food from the list
+        da.deleteFoodFromList((int)junctionFood1.getId(), (int)junctionTestList.getId());
+
+        Log.d(TAG, "===== Foods in 'Asian Dishes' List (After Deletion) =====");
+        Log.d(TAG, da.getAllFoodFromFoodList((int)junctionTestList.getId()).toString());
+
+// Cleanup
+        da.deleteFoodList(junctionTestList);
+        fda.deleteFood(junctionFood1);
+        fda.deleteFood(junctionFood2);
     }
 }

@@ -1,8 +1,10 @@
 package com.example.finalproject.dataaccess;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.example.finalproject.models.Food;
 import com.example.finalproject.models.FoodList;
@@ -46,12 +48,15 @@ public class FoodJunctionTableDataAccess {
     }
 
     public void addFoodToList(int foodId, int foodListId) {
-        String query = String.format("INSERT INTO FoodList_Food (%s, %s) VALUES (" + foodId + "," + foodListId + ");", COLUMN_FOOD_ID, COLUMN_FOOD_LIST_ID);
-        Cursor c = database.rawQuery(query, null);
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_FOOD_ID, foodId);
+        values.put(COLUMN_FOOD_LIST_ID, foodListId);
+
+        long result = database.insert(TABLE_NAME, null, values); // TABLE_NAME should be "FoodList_Food" or whatever your actual table name is
     }
 
     public int deleteFoodFromList(int foodId, int foodListId) {
-        return database.delete(TABLE_NAME, COLUMN_FOOD_ID + "=" + foodId + "AND" + COLUMN_FOOD_LIST_ID + "=" + foodListId, null);
+        return database.delete(TABLE_NAME, COLUMN_FOOD_ID + " = " + foodId + " AND " + COLUMN_FOOD_LIST_ID + " = " + foodListId, null);
     }
 
     public ArrayList<Food> getAllFoodFromFoodList(int foodListId){
