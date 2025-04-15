@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FoodDetailsActivity"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/lblName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/lbl_Name"
+        android:textSize="18sp" />
+
+    <EditText
+        android:id="@+id/foodName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:text="" />
+
+    <TextView
+        android:id="@+id/lblDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/lbl_description"
+        android:textSize="18sp" />
+
+    <EditText
+        android:id="@+id/txtDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:text="" />
+
+    <TextView
+        android:id="@+id/sweetLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sweetness_0_10"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/sliderSweetValueText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Value: 0"/>
+
+    <SeekBar
+        android:id="@+id/seekBarSweet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="10" />
+
+    <TextView
+        android:id="@+id/saltyLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/saltiness_0_10"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/sliderSaltyValueText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Value: 0"/>
+
+    <SeekBar
+        android:id="@+id/seekBarSalty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="10" />
+
+    <TextView
+        android:id="@+id/sourLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sourness_0_10"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/sliderSourValueText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Value: 0"/>
+
+    <SeekBar
+        android:id="@+id/seekBarSour"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="10" />
+
+    <TextView
+        android:id="@+id/bitterLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/bitterness_0_10"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/sliderBitterValueText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Value: 0"/>
+
+    <SeekBar
+        android:id="@+id/seekBarBitter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="10" />
+
+    <TextView
+        android:id="@+id/umamiLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/umami_savoryness_0_10"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/sliderUmamiValueText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Value: 0" />
+
+    <SeekBar
+        android:id="@+id/seekBarUmami"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="10" />
+
+    <TextView
+        android:id="@+id/lblCountryOfOrigin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/lbl_CountryOfOrigin"
+        android:textSize="18sp" />
+
+    <EditText
+        android:id="@+id/txtCountryOfOrigin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:text="" />
+
+
+    <CheckBox
+        android:id="@+id/isSpicy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/lbl_spicy" />
+
+    <Button
+        android:id="@+id/btnSave"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_save" />
+
+    <Button
+        android:id="@+id/btnDelete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_delete" />
+
+</LinearLayout>

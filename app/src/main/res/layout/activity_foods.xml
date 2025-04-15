@@ -5,21 +5,17 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
+    tools:context=".FoodsActivity"
     android:orientation="vertical">
-
+    <!-- the @+id means that it will automatically generate an id for the R class-->
     <Button
-        android:id="@+id/btn_food_activity"
+        android:id="@+id/btnAddFood"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Foods"
-        android:onClick="buttonPressed"/>
+        android:text="@string/btn_add_food" />
 
-    <Button
-        android:id="@+id/btn_food_list_activity"
+    <ListView
+        android:id="@+id/lsFoods"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Food Lists"
-        android:onClick="buttonPressed"/>
-
+        android:layout_height="match_parent" />
 </LinearLayout>
