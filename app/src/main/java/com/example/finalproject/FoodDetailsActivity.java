@@ -29,7 +29,7 @@ import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class FoodDetailsActivity extends AppCompatActivity {
+public class FoodDetailsActivity extends FoodMenuActivity {
     public static final String TAG = "FoodDetailsActivity";
     public static final String EXTRA_FOOD_ID = "foodId";
     FoodDataAccess fda;

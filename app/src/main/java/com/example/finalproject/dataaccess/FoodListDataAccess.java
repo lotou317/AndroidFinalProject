@@ -135,4 +135,8 @@ public ArrayList<FoodList> getAllFoodLists() {
         return FDataAccess.deleteFoodFromList(foodId, foodListId);
     }
 
+    public ArrayList<Food> getAllFoodsNotInFoodList(int foodListId) {
+        return FDataAccess.getAllFoodsNotInFoodList(foodListId);
+    }
+
 }

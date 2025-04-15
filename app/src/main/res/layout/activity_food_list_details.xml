@@ -1,10 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FoodListDetailsActivity">
+    tools:context=".FoodListDetailsActivity"
+    android:orientation="vertical">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/lblListName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/list_name"
+        android:textSize="18sp" />
+
+    <EditText
+        android:id="@+id/foodListName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:text="" />
+    <TextView
+        android:id="@+id/lblCreated"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/created_date"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/txtCreated"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:text="" />
+    <TextView
+        android:id="@+id/lblLastUpdated"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/last_updated_date"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/txtLastUpdated"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:text="" />
+
+    <TextView
+        android:id="@+id/txtLsFoods"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:text="Foods In List:"
+        android:textSize="18sp" />
+
+    <ListView
+        android:id="@+id/lsRemoveFoods"
+        android:layout_width="match_parent"
+        android:layout_height="215dp" />
+
+    <TextView
+        android:id="@+id/txtLsAddFoods"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:text="Addable Foods:"
+        android:textSize="18sp" />
+
+    <ListView
+        android:id="@+id/lsAddFoods"
+        android:layout_width="match_parent"
+        android:layout_height="215dp" />
+
+    <Button
+        android:id="@+id/btnSave"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_save" />
+
+    <Button
+        android:id="@+id/btnDelete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_delete" />
+
+</LinearLayout>

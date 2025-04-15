@@ -92,7 +92,8 @@ public class FoodDataAccess {
 
     //    @Override
     public Food getFoodById(long id) {
-        String query = String.format("SELECT %s, %s, %s, %s, %s, %s, %s, %s, %s, %s FROM %s",
+        String query = String.format(
+                "SELECT %s, %s, %s, %s, %s, %s, %s, %s, %s, %s FROM %s WHERE %s = ?",
                 COLUMN_FOOD_ID,
                 COLUMN_SWEET,
                 COLUMN_SALTY,
@@ -103,22 +104,30 @@ public class FoodDataAccess {
                 COLUMN_SPICY,
                 COLUMN_NAME,
                 COLUMN_DESCRIPTION,
-                TABLE_NAME
+                TABLE_NAME,
+                COLUMN_FOOD_ID
         );
-        Cursor c = database.rawQuery(query, null);
-        c.moveToFirst();
-        int sweet = c.getInt(1);
-        int salty = c.getInt(2);
-        int sour = c.getInt(3);
-        int bitter = c.getInt(4);
-        int umami = c.getInt(5);
-        String countryOfOrigin = c.getString(6);
-        boolean spicy = c.getLong(7) == 1;
-        String name = c.getString(8);
-        String description = c.getString(9);
-        c.close();
-        return new Food(id, sweet, salty, sour, bitter, umami, countryOfOrigin, spicy, name, description);
 
+        Cursor c = database.rawQuery(query, new String[]{String.valueOf(id)});
+
+        if (c.moveToFirst()) {
+            long foodId = c.getLong(0);
+            int sweet = c.getInt(1);
+            int salty = c.getInt(2);
+            int sour = c.getInt(3);
+            int bitter = c.getInt(4);
+            int umami = c.getInt(5);
+            String countryOfOrigin = c.getString(6);
+            boolean spicy = c.getInt(7) == 1;
+            String name = c.getString(8);
+            String description = c.getString(9);
+            c.close();
+
+            return new Food(foodId, sweet, salty, sour, bitter, umami, countryOfOrigin, spicy, name, description);
+        } else {
+            c.close();
+            return null; // or throw an exception / handle not found
+        }
     }
 
     //    @Override

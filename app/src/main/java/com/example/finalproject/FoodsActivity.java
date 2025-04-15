@@ -22,7 +22,7 @@ import com.example.finalproject.models.Food;
 
 import java.util.ArrayList;
 
-public class FoodsActivity extends AppCompatActivity {
+public class FoodsActivity extends FoodMenuActivity {
 
     public static final String TAG = "FoodsActivity";
 

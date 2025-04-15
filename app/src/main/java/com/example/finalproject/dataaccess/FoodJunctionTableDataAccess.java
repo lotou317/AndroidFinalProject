@@ -94,6 +94,43 @@ public class FoodJunctionTableDataAccess {
         return foods;
     }
 
+    public ArrayList<Food> getAllFoodsNotInFoodList(int foodListId) {
+        ArrayList<Food> foods = new ArrayList<>();
+        String query = String.format(
+                "SELECT * FROM %s WHERE id NOT IN (" +
+                        "SELECT %s FROM %s WHERE %s = %d);",
+                TABLE_FOOD,
+                COLUMN_FOOD_ID,
+                TABLE_NAME, // your junction table
+                COLUMN_FOOD_LIST_ID,
+                foodListId
+        );
+
+        Cursor c = database.rawQuery(query, null);
+        if (c != null && c.getCount() > 0) {
+            c.moveToFirst();
+            while (!c.isAfterLast()) {
+                long id = c.getLong(0);
+                int sweet = c.getInt(1);
+                int salty = c.getInt(2);
+                int sour = c.getInt(3);
+                int bitter = c.getInt(4);
+                int umami = c.getInt(5);
+                String countryOfOrigin = c.getString(6);
+                boolean spicy = c.getLong(7) == 1;
+                String name = c.getString(8);
+                String description = c.getString(9);
+
+                Food f = new Food(id, sweet, salty, sour, bitter, umami, countryOfOrigin, spicy, name, description);
+                foods.add(f);
+
+                c.moveToNext();
+            }
+            c.close();
+        }
+        return foods;
+    }
+
     public ArrayList<FoodList> getAllFoodListFromFood(int foodId){
         ArrayList<FoodList> foodLists = new ArrayList<>();
         String query = String.format("SELECT %s.* FROM %s JOIN %s ON %s.id = %s.%s WHERE %s.%s =" + foodId + ";",
